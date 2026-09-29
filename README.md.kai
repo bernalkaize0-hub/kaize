@@ -1,0 +1,52 @@
+# Event Planner
+
+A simple Event Planner web application built using React.js.
+
+The application allows users to create, view, and delete events through a simple and user-friendly interface.
+
+---
+
+## Features
+
+- Add a new event
+- Enter event name
+- Select event date
+- Enter event location
+- Add event description
+- View all created events
+- Delete events
+- Responsive user interface
+
+---
+
+## Technologies Used
+
+- React.js
+- JavaScript
+- HTML
+- CSS
+- Vite
+- Node.js
+- npm
+
+---
+
+## Project Structure
+
+```text
+event-planner/
+│
+├── public/
+│
+├── src/
+│   ├── assets/
+│   ├── App.jsx
+│   ├── App.css
+│   ├── index.css
+│   └── main.jsx
+│
+├── .gitignore
+├── index.html
+├── package.json
+├── package-lock.json
+└── README.md
