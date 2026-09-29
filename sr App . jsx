@@ -1,0 +1,193 @@
+import { useState } from "react";
+import "./App.css";
+
+function App() {
+  const [events, setEvents] = useState([]);
+
+  const [formData, setFormData] = useState({
+    title: "",
+    date: "",
+    time: "",
+    location: "",
+    description: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (
+      !formData.title ||
+      !formData.date ||
+      !formData.time ||
+      !formData.location
+    ) {
+      alert("Please complete all required fields.");
+      return;
+    }
+
+    const newEvent = {
+      id: Date.now(),
+      ...formData
+    };
+
+    setEvents([...events, newEvent]);
+
+    setFormData({
+      title: "",
+      date: "",
+      time: "",
+      location: "",
+      description: ""
+    });
+  };
+
+  const deleteEvent = (id) => {
+    setEvents(events.filter((event) => event.id !== id));
+  };
+
+  return (
+    <div className="app">
+      <header className="header">
+        <div>
+          <h1>Event Planner</h1>
+          <p>Plan and manage your events easily.</p>
+        </div>
+      </header>
+
+      <main className="container">
+        <section className="form-section">
+          <h2>Create New Event</h2>
+
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Event Title *</label>
+              <input
+                type="text"
+                name="title"
+                placeholder="Enter event title"
+                value={formData.title}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label>Date *</label>
+                <input
+                  type="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Time *</label>
+                <input
+                  type="time"
+                  name="time"
+                  value={formData.time}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>Location *</label>
+              <input
+                type="text"
+                name="location"
+                placeholder="Enter event location"
+                value={formData.location}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Description</label>
+              <textarea
+                name="description"
+                placeholder="Enter event description"
+                value={formData.description}
+                onChange={handleChange}
+                rows="4"
+              ></textarea>
+            </div>
+
+            <button type="submit" className="add-button">
+              + Add Event
+            </button>
+          </form>
+        </section>
+
+        <section className="events-section">
+          <div className="section-title">
+            <h2>My Events</h2>
+            <span>{events.length} Events</span>
+          </div>
+
+          {events.length === 0 ? (
+            <div className="empty-state">
+              <div className="empty-icon">📅</div>
+              <h3>No Events Yet</h3>
+              <p>
+                Create your first event using the form.
+              </p>
+            </div>
+          ) : (
+            <div className="event-list">
+              {events.map((event) => (
+                <div className="event-card" key={event.id}>
+                  <div className="event-card-header">
+                    <h3>{event.title}</h3>
+
+                    <button
+                      className="delete-button"
+                      onClick={() => deleteEvent(event.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+
+                  <div className="event-details">
+                    <p>
+                      <strong>📅 Date:</strong> {event.date}
+                    </p>
+
+                    <p>
+                      <strong>⏰ Time:</strong> {event.time}
+                    </p>
+
+                    <p>
+                      <strong>📍 Location:</strong> {event.location}
+                    </p>
+
+                    {event.description && (
+                      <p>
+                        <strong>📝 Description:</strong>{" "}
+                        {event.description}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      </main>
+
+      <footer>
+        <p>Event Planner © 2026</p>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
